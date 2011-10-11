@@ -31,6 +31,9 @@ $classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader('Symfony', 'phar://'.__FILE__);
 $classLoader->register();
 
+$classLoader = new \Doctrine\Common\ClassLoader('Mytypes', 'phar://'.__FILE__);
+$classLoader->register();
+
 // Support for using the Doctrine ORM convention of providing a `cli-config.php` file.
 $configFile = getcwd() . DIRECTORY_SEPARATOR . 'cli-config.php';
 

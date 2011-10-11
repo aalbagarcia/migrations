@@ -29,6 +29,8 @@ use Symfony\Component\Console\Command\Command,
     Doctrine\DBAL\Migrations\Configuration\Configuration,
     Doctrine\DBAL\Migrations\Configuration\YamlConfiguration,
     Doctrine\DBAL\Migrations\Configuration\XmlConfiguration;
+use Mytypes;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * CLI Command for adding and deleting migration versions from the version table.
@@ -100,7 +102,16 @@ abstract class AbstractCommand extends Command
             } else {
                 throw new \InvalidArgumentException('You have to specify a --db-configuration file or pass a Database Connection as a dependency to the Migrations.');
             }
-
+            Type::addType('binary', 'Mytypes\BinaryType');
+            Type::addType('varbinary', 'Mytypes\VarbinaryType');
+            Type::addType('enum', 'Mytypes\EnumType');
+            Type::addType('mediumblob', 'Mytypes\MediumblobType');
+            Type::addType('blob', 'Mytypes\BlobType');
+            $conn->getDatabasePlatform()->registerDoctrineTypeMapping('binary', 'binary');
+            $conn->getDatabasePlatform()->registerDoctrineTypeMapping('varbinary', 'varbinary');
+            $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'enum');
+            $conn->getDatabasePlatform()->registerDoctrineTypeMapping('blob', 'blob');
+            $conn->getDatabasePlatform()->registerDoctrineTypeMapping('mediumblob', 'mediumblob');
             if ($input->getOption('configuration')) {
                 $info = pathinfo($input->getOption('configuration'));
                 $class = $info['extension'] === 'xml' ? 'Doctrine\DBAL\Migrations\Configuration\XmlConfiguration' : 'Doctrine\DBAL\Migrations\Configuration\YamlConfiguration';

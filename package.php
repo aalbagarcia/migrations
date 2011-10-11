@@ -29,7 +29,8 @@ $dirs = array(
     './lib'                                 =>  '/Doctrine\/DBAL\/Migrations/',
     './lib/vendor/doctrine-dbal/lib'        =>  '/Doctrine/',
     './lib/vendor/doctrine-common/lib'      =>  '/Doctrine/',
-    './lib/vendor' =>  '/Symfony/'
+    './lib/vendor' =>  '/Symfony/',
+    './lib/mytypes' =>  '/Mytypes/'
 );
 
 foreach ($dirs as $dir => $filter) {
